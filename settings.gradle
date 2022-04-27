@@ -12,6 +12,6 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "HoShICore"
+rootProject.name = "HoshiCore"
 include ':app'
 include ':core'
