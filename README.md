@@ -33,7 +33,7 @@ Hoshi 纯净核心，仅依赖最低限度的官方库，不引入其它第三�
     ```
 ## 发布步骤
 1. 首先在 lib 中写好代码
-2. 在 app 中写测试代码查看效果，然后分以下两种发布方案
+2. 在 app 中写测试代码查看效果
 3. 在 local-maven.gradle 的 artifactVersion 中正确填写当前版本号
 4. 运行 publishToMavenLocal
 5. 目标项目中引用并测试
