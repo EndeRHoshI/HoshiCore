@@ -25,7 +25,7 @@ Hoshi 纯净核心，仅依赖最低限度的官方库，不引入其它第三�
 ### 通过 AAR 包来引入
 1. 下载 AAR
 
-   可以在 [releases](https://github.com/EndeRHoshI/HoshiArmor/releases) 下载，或者直接到本地仓库中取得，默认本地 Maven 仓库地址：C:\Users\userName\\.m2\repository\artifactGroup\artifactBuildId\artifactVersion
+   可以在 [releases](https://github.com/EndeRHoshI/HoshiCore/releases) 下载，或者直接到本地仓库中取得，默认本地 Maven 仓库地址：C:\Users\userName\\.m2\repository\artifactGroup\artifactBuildId\artifactVersion
 
 2. 将 AAR 放到 libs 文件夹下，build.gradle 中引入 AAR 并同步
     ```
