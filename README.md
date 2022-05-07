@@ -27,9 +27,9 @@ Hoshi 纯净核心，仅依赖最低限度的官方库，不引入其它第三�
 
    可以在 [releases](https://github.com/EndeRHoshI/HoshiCore/releases) 下载，或者直接到本地仓库中取得，默认本地 Maven 仓库地址：C:\Users\userName\\.m2\repository\artifactGroup\artifactBuildId\artifactVersion
 
-2. 将 AAR 放到 libs 文件夹下，build.gradle 中引入 AAR 并同步
+2. 将 AAR 放到 app/src 同级的 libs 文件夹下，build.gradle 中引入 AAR 并同步
     ```
-    implementation(name: 'hoshi-core-0.0.1', ext: 'aar')
+    implementation(files("./libs/hoshi-core-0.0.1.aar"))
     ```
 ## 发布步骤
 1. 首先在 lib 中写好代码
