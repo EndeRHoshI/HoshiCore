@@ -42,8 +42,10 @@ dependencies {
     api("com.google.android.material:material:1.5.0")
 
     // 另加 ConstraintLayout 和协程
-    api("androidx.constraintlayout:constraintlayout:2.1.1")
+    api("androidx.constraintlayout:constraintlayout:2.1.3")
     api("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1")
+
+    implementation("androidx.startup:startup-runtime:1.1.0") // 统一处理初始化
 }
 
 // 需要这段代码才能推上仓库，可以看看具体是什么
