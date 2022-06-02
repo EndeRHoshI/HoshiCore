@@ -31,6 +31,10 @@ Hoshi 纯净核心，仅依赖最低限度的官方库，不引入其它第三�
     ```
     implementation(files("./libs/hoshi-core-0.0.1.aar"))
     ```
+   如果不使用 KTS，则是如下代码即可
+    ```
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+    ```
 ## 发布步骤
 1. 首先在 lib 中写好代码
 2. 在 app 中写测试代码查看效果
