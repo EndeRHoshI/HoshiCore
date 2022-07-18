@@ -36,16 +36,13 @@ android {
 }
 
 dependencies {
-    // 纯净核心，依赖创建 No Activity Project 时所需的库
-    api("androidx.core:core-ktx:1.7.0")
-    api("androidx.appcompat:appcompat:1.4.1")
-    api("com.google.android.material:material:1.5.0")
+    // 只在本模块依赖，因为打成 aar 之后不能传递，后续可以考虑连需要这些依赖的地方都移除掉
+    implementation("androidx.core:core-ktx:1.7.0")
+    implementation("androidx.appcompat:appcompat:1.4.1")
+    implementation("com.google.android.material:material:1.5.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.2") // 协程
 
-    // 另加 ConstraintLayout 和协程
-    api("androidx.constraintlayout:constraintlayout:2.1.3")
-    api("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1")
-
-    implementation("androidx.startup:startup-runtime:1.1.0") // 统一处理初始化
+    implementation("androidx.startup:startup-runtime:1.1.1") // 统一处理初始化
 }
 
 // 需要这段代码才能推上仓库，可以看看具体是什么

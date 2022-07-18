@@ -8,6 +8,7 @@ import com.hoshi.core.AppState
 
 /**
  * Android Q 及以上机型使用 Panel 工具类
+ * TODO 可以直接抽成 context 扩展了，因为这里需要用到 AppState，不太好
  */
 object PanelUtils {
     private const val TAG = "PanelUtils"

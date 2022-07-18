@@ -151,7 +151,7 @@ object TimeUtils {
         scope: CoroutineScope = MainScope()
     ): Job {
         return flow {
-            for (i in 1..total) {
+            for (i in 0 until total) {
                 emit(i)
                 delay(tickMillis)
             }

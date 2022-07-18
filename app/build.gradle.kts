@@ -41,6 +41,9 @@ android {
 
 dependencies {
     implementation(project(":core")) // 依赖 Hoshi 核心
+    implementation("androidx.core:core-ktx:1.7.0")
+    implementation("androidx.appcompat:appcompat:1.4.1")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
     val ktxVersion = "2.3.1"
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$ktxVersion")
