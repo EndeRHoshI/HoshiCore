@@ -1,6 +1,15 @@
 package com.hoshi.core.utils
 
+import android.app.usage.StorageStats
+import android.app.usage.StorageStatsManager
+import android.content.Context
+import android.content.pm.PackageManager
+import android.os.Build
+import android.os.storage.StorageManager
+import androidx.annotation.RequiresApi
 import com.hoshi.core.AppState
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.*
 import java.text.DecimalFormat
 import java.util.zip.CRC32
@@ -180,4 +189,50 @@ object FileUtils {
         return df.format(l / 1024F / 1024F) + "GB"
     }
 
+    /**
+     * 查询 StorageStats，以取得各种存储数据
+     * @return StorageStats?
+     */
+    @RequiresApi(Build.VERSION_CODES.O)
+    suspend fun queryStorageStat(): StorageStats? {
+        val context = AppState.getApplicationContext()
+        val uid = context.packageManager.getApplicationInfo(AppState.getPackageName(), PackageManager.GET_META_DATA).uid
+        val storageStatsManager = context.getSystemService(Context.STORAGE_STATS_SERVICE) as StorageStatsManager
+        val uuid = StorageManager.UUID_DEFAULT
+        val storageStats: StorageStats?
+        withContext(Dispatchers.IO) {
+            // 这两个效果一致
+            // val cacheBytes = storageManager.getCacheSizeBytes(uuid)
+            // val cacheBytes = stats.cacheBytes
+            storageStats = runCatching { storageStatsManager.queryStatsForUid(uuid, uid) }.getOrNull() // 耗时操作
+        }
+        return storageStats
+    }
+
+    /**
+     * 取得手机总容量和剩余容量
+     * @return Pair<Long, Long> first -> 总容量，second -> 剩余容量
+     */
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun queryPhoneTotalAndFree(): Pair<Long, Long> {
+        val context = AppState.getApplicationContext()
+        val storageStatsManager = context.getSystemService(Context.STORAGE_STATS_SERVICE) as StorageStatsManager
+        val uuid = StorageManager.UUID_DEFAULT
+        val totalBytes = storageStatsManager.getTotalBytes(uuid)
+        val freeBytes = storageStatsManager.getFreeBytes(uuid)
+        return Pair(totalBytes, freeBytes)
+    }
+
+}
+
+/**
+ * 文件单位
+ * @property step 当前级别，用于计算两个单位之间相差多少个级别
+ */
+sealed class Unit(val step: Int) {
+    object Byte : Unit(0)
+    object KB : Unit(1)
+    object MB : Unit(2)
+    object GB : Unit(3)
+    object TB : Unit(4)
 }
