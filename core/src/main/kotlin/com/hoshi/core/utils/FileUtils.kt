@@ -5,6 +5,8 @@ import android.app.usage.StorageStatsManager
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
+import android.os.Environment
+import android.os.StatFs
 import android.os.storage.StorageManager
 import androidx.annotation.RequiresApi
 import com.hoshi.core.AppState
@@ -191,6 +193,11 @@ object FileUtils {
 
     /**
      * 查询 StorageStats，以取得各种存储数据
+     * TODO 看看如何兼容一下 O 以下的机型，以下是思路和要点
+     * 1. Android8.0 之前没有对应的 API 提供，需要引入两个 AIDL 文件
+     * 2. 引入文件后，使用反射进行相关接口的调用
+     * 3. 反射调用时，是一个回调形式的方法，改成协程的同步写法来实现，以契合这个方法
+     * 参考文章 [https://www.jianshu.com/p/d97c0de8bc18]
      * @return StorageStats?
      */
     @RequiresApi(Build.VERSION_CODES.O)
@@ -201,7 +208,7 @@ object FileUtils {
         val uuid = StorageManager.UUID_DEFAULT
         val storageStats: StorageStats?
         withContext(Dispatchers.IO) {
-            // 这两个效果一致
+            // 以下这两个效果一致
             // val cacheBytes = storageManager.getCacheSizeBytes(uuid)
             // val cacheBytes = stats.cacheBytes
             storageStats = runCatching { storageStatsManager.queryStatsForUid(uuid, uid) }.getOrNull() // 耗时操作
@@ -211,17 +218,30 @@ object FileUtils {
 
     /**
      * 取得手机总容量和剩余容量
+     * TODO 要看下 8.0 以下机型，没有 SD 卡时是怎样的，可以配合再深入看看存储相关的内容，研究下 SD 卡和手机存储的关系
      * @return Pair<Long, Long> first -> 总容量，second -> 剩余容量
      */
-    @RequiresApi(Build.VERSION_CODES.O)
     fun queryPhoneTotalAndFree(): Pair<Long, Long> {
         val context = AppState.getApplicationContext()
-        val storageStatsManager = context.getSystemService(Context.STORAGE_STATS_SERVICE) as StorageStatsManager
-        val uuid = StorageManager.UUID_DEFAULT
-        val totalBytes = storageStatsManager.getTotalBytes(uuid)
-        val freeBytes = storageStatsManager.getFreeBytes(uuid)
+        val totalBytes: Long
+        val freeBytes: Long
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
+            val storageStatsManager = context.getSystemService(Context.STORAGE_STATS_SERVICE) as StorageStatsManager
+            val uuid = StorageManager.UUID_DEFAULT
+            totalBytes = storageStatsManager.getTotalBytes(uuid)
+            freeBytes = storageStatsManager.getFreeBytes(uuid)
+        } else {
+            val statFs = StatFs(Environment.getExternalStorageDirectory().absolutePath + File.separator)
+            totalBytes = statFs.totalBytes
+            freeBytes = statFs.freeBytes
+        }
         return Pair(totalBytes, freeBytes)
     }
+
+    /**
+     * 判断 SD Card 是否可用
+     */
+    fun isSDCardEnable() = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)
 
 }
 

@@ -1,7 +1,9 @@
 package com.hoshi.core.utils
 
 import android.content.Context
+import android.content.Intent
 import android.location.LocationManager
+import android.net.Uri
 import android.os.Build
 import java.util.*
 
@@ -139,6 +141,19 @@ object SystemUtils {
         val gps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
         val network = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
         return gps || network
+    }
+
+    /**
+     * 跳转到应用详情界面
+     */
+    fun gotoAppDetailIntent(context: Context) {
+        context.startActivity(
+            Intent().apply {
+                action = android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                data = Uri.parse("package:" + context.packageName)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+        )
     }
 
 }
