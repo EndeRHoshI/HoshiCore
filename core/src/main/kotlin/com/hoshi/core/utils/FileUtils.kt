@@ -4,6 +4,8 @@ import android.app.usage.StorageStats
 import android.app.usage.StorageStatsManager
 import android.content.Context
 import android.content.pm.PackageManager
+import android.content.res.AssetFileDescriptor
+import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.os.StatFs
@@ -28,13 +30,103 @@ object FileUtils {
     const val GB = MB * 1024
     const val TB = GB * 1024
 
-    fun isExists(filePath: String?): Boolean {
-        if (filePath.isNullOrEmpty()) {
+    /**
+     * 只读模式
+     */
+    const val MODE_READ_ONLY = "r"
+
+    fun isScopedStorageMode() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && !Environment.isExternalStorageLegacy()
+
+    fun getFileByPath(filePath: String) = if (isSpace(filePath)) {
+        null
+    } else {
+        File(filePath)
+    }
+
+    private fun isSpace(s: String?): Boolean {
+        s ?: return true
+        var i = 0
+        val len = s.length
+        while (i < len) {
+            if (!Character.isWhitespace(s[i])) {
+                return false
+            }
+            ++i
+        }
+        return true
+    }
+
+    fun isExists(file: File?): Boolean {
+        if (file == null) {
             return false
         }
+        if (file.exists()) {
+            return true
+        }
 
-        return File(filePath).exists()
+        return isExists(file.absolutePath)
     }
+
+    fun isExists(filePath: String): Boolean {
+        val file = getFileByPath(filePath) ?: return false
+        if (file.exists()) {
+            return true
+        }
+        return isFileExistsApi29(filePath)
+    }
+
+    /**
+     * Android 10 判断文件是否存在的方法
+     *
+     * @param filePath 文件路径
+     * @return {@code true}: 存在<br>{@code false}: 不存在
+     */
+    private fun isFileExistsApi29(filePath: String): Boolean {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            var afd: AssetFileDescriptor? = null
+            try {
+                val uri = Uri.parse(filePath)
+                afd = openAssetFileDescriptor(uri)
+                if (afd == null) {
+                    return false
+                } else {
+                    closeIOQuietly(afd)
+                }
+            } catch (e: FileNotFoundException) {
+                return false
+            } finally {
+                closeIOQuietly(afd)
+            }
+            return true
+        }
+        return false
+    }
+
+    /**
+     * 安静关闭 IO
+     *
+     * @param closeables closeables
+     */
+    fun closeIOQuietly(vararg closeables: Closeable?) {
+        for (closeable in closeables) {
+            if (closeable != null) {
+                try {
+                    closeable.close()
+                } catch (ignored: IOException) {
+                }
+            }
+        }
+    }
+
+    /**
+     * 从uri资源符中读取文件描述
+     *
+     * @param uri 文本资源符
+     * @return AssetFileDescriptor
+     */
+    fun openAssetFileDescriptor(
+        uri: Uri
+    ) = AppState.getApplicationContext().contentResolver.openAssetFileDescriptor(uri, MODE_READ_ONLY)
 
     /**
      * 压缩文件
