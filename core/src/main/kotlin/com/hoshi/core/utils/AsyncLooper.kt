@@ -11,8 +11,8 @@ object AsyncLooper {
     @JvmStatic
     val handler by lazy { Handler(Looper.getMainLooper()) }
 
-    fun main(action: () -> Unit) {
-        handler.post(action)
+    fun main(runnable: Runnable) {
+        handler.post(runnable)
     }
 
 }
