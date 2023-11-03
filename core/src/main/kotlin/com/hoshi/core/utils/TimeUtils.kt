@@ -118,8 +118,8 @@ object TimeUtils {
      */
     fun countDown(
         total: Int,
-        onTick: (Int) -> Unit,
-        onFinish: () -> Unit,
+        onTick: (Int) -> kotlin.Unit,
+        onFinish: () -> kotlin.Unit,
         tickMillis: Long = 1000,
         scope: CoroutineScope = MainScope()
     ) {
@@ -145,8 +145,8 @@ object TimeUtils {
      */
     fun timeSchedule(
         total: Int = Int.MAX_VALUE,
-        onTick: (Int) -> Unit,
-        onFinish: () -> Unit,
+        onTick: (Int) -> kotlin.Unit,
+        onFinish: () -> kotlin.Unit,
         tickMillis: Long = 1000,
         scope: CoroutineScope = MainScope()
     ): Job {
