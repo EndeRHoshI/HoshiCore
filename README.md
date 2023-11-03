@@ -41,6 +41,8 @@ Hoshi 纯净核心，仅依赖最低限度的官方库，不引入其它第三�
 3. 在 local-maven.gradle 的 artifactVersion 中正确填写当前版本号
 4. 运行 Gradle 快捷指令列表中的 publishing 中的 publishToMavenLocal
 5. 目标项目中引用并测试
-6. 稳定后打个 tag，填写变更内容，同时保存好产物（这样远端引用依赖时，可以脱离本地 Maven，直接下载产物，使用 AAR 包来引入）
+6. 稳定后可以进行打 tag，在 AS 中的 Git 记录中右键添加 Tag
+7. 然后用指令 git push origin <tagName> 推到远端仓库
+8. Github 上面创建 Release，指向刚刚的 Tag，并填写变更内容，同时上传产物（这样远端引用依赖时，可以脱离本地 Maven，直接下载产物，使用 AAR 包来引入）
 
 注意：尽量采用 Maven 仓库的方式发布并依赖，除非项目足够简单只需要引用 HoshiCore，否则单纯使用 AAR 包的话，把 AAR 再打进另一个库（比如 HoshiArmor）并不是简单的事情
