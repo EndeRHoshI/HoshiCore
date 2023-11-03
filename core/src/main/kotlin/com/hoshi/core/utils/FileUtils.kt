@@ -174,32 +174,39 @@ object FileUtils {
     }
 
     /**
-     * 删除文件夹下的文件
+     * 删除文件或文件夹
      * @param targetFile 目标文件
-     * @param retainParent 保留文件夹
+     * @param retainParent 保留文件夹，注意是指目标文件夹，不是父文件夹
      */
-    fun deleteFolder(targetFile: File, retainParent: Boolean = true) {
-        if (targetFile.exists() && targetFile.isDirectory) {
-            val files = targetFile.listFiles()
-            files?.forEach {
-                it.delete()
-            }
-            if (!retainParent) {
+    fun deleteFile(targetFile: File, retainParent: Boolean = true) {
+        if (targetFile.exists()) {
+            if (targetFile.isDirectory) {
+                // 传入的 File 是文件夹
+                val files = targetFile.listFiles()
+                files?.forEach {
+                    it.delete()
+                }
+                if (!retainParent) {
+                    targetFile.delete()
+                }
+            } else {
+                // 传入的 File 不是文件夹
                 targetFile.delete()
             }
-        } else if (!retainParent) {
-            targetFile.delete()
+        } else {
+            // 文件或文件夹不存在
         }
+
     }
 
     /**
-     * 删除文件夹下的文件
+     * 删除文件或文件夹
      * @param targetPath 目标文件路径
-     * @param retainParent 保留文件夹
+     * @param retainParent 保留文件夹，注意是指目标文件夹，不是父文件夹
      */
-    fun deleteFolder(targetPath: String, retainParent: Boolean = true) {
+    fun deleteFile(targetPath: String, retainParent: Boolean = true) {
         val targetFile = File(targetPath)
-        deleteFolder(targetFile, retainParent)
+        deleteFile(targetFile, retainParent)
     }
 
     fun getFileList(folderPath: String): List<File> {
