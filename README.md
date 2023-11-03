@@ -20,7 +20,7 @@ Hoshi 纯净核心，仅依赖最低限度的官方库，不引入其它第三�
     ```
 3. 引入仓库并同步，仓库格式规则为：`${artifactGroup}:${artifactBuildId}:${artifactVersion}`
     ```
-    implementation 'com.hoshi.lib:hoshi-core:0.0.1'
+    implementation 'com.hoshi.lib:hoshi-core:0.0.3'
     ```
 ### 通过 AAR 包来引入
 1. 下载 AAR
@@ -39,7 +39,7 @@ Hoshi 纯净核心，仅依赖最低限度的官方库，不引入其它第三�
 1. 首先在 lib 中写好代码
 2. 在 app 中写测试代码查看效果
 3. 在 local-maven.gradle 的 artifactVersion 中正确填写当前版本号
-4. 运行 publishToMavenLocal
+4. 运行 Gradle 快捷指令列表中的 publishing 中的 publishToMavenLocal
 5. 目标项目中引用并测试
 6. 稳定后打个 tag，填写变更内容，同时保存好产物（这样远端引用依赖时，可以脱离本地 Maven，直接下载产物，使用 AAR 包来引入）
 
