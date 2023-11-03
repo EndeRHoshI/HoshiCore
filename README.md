@@ -29,7 +29,7 @@ Hoshi 纯净核心，仅依赖最低限度的官方库，不引入其它第三�
 
 2. 将 AAR 放到 app/src 同级的 libs 文件夹下，build.gradle 中引入 AAR 并同步
     ```
-    implementation(files("./libs/hoshi-core-0.0.1.aar"))
+    implementation(files("./libs/hoshi-core-0.0.3.aar"))
     ```
    如果不使用 KTS，则是如下代码即可
     ```
