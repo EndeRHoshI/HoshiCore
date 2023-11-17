@@ -5,7 +5,8 @@ import android.content.Intent
 import android.location.LocationManager
 import android.net.Uri
 import android.os.Build
-import java.util.*
+import android.os.Environment
+import java.util.Locale
 
 /**
  * 系统工具类
@@ -155,5 +156,10 @@ object SystemUtils {
             }
         )
     }
+
+    /**
+     * @return Boolean 是否存在 SDCard
+     */
+    private fun isSDCardExist() = Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED
 
 }
