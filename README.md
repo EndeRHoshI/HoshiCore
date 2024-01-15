@@ -22,7 +22,7 @@ Hoshi 纯净核心，仅依赖最低限度的官方库，不引入其它第三�
        implementation 'com.github.EndeRHoshI:HoshiCore:Tag'
    }
    ```
-   其中的 Tag 表示当前版本：[![](https://jitpack.io/v/EndeRHoshI/HoshiCore.svg)](https://jitpack.io/#EndeRHoshI/HoshiCore)
+   平时的引用，直接用 3、4 两步即可，这里写上 1、2 步只是写得更全一些，其中的 Tag 表示当前版本：[![](https://jitpack.io/v/EndeRHoshI/HoshiCore.svg)](https://jitpack.io/#EndeRHoshI/HoshiCore)
 ### 通过本地仓库引入
 1. 打包上传到本地 Maven 仓库，如果仓库中已有所需的版本，跳过该步骤
 
