@@ -2,7 +2,29 @@
 Hoshi 纯净核心，仅依赖最低限度的官方库，不引入其它第三方库
 
 ## 使用说明
-目前主要通过本地仓库引入或 AAR 引入
+目前主要通过 Jitpack、本地 Maven 仓库或 AAR 引入
+### 通过 Jitpack 引入
+1. 更新代码后，提升 artifactVersion
+2. 推到远端 git 仓库
+3. 进入 [Jitpack 官网](https://jitpack.io/)，搜索 `EndeRHoshI/HoshiCore`
+4. 点击 Get it，跟随 How to 中说明的来做，大概如下：
+   1. Add the JitPack repository to your build file
+      ```
+      dependencyResolutionManagement {
+          ositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+          repositories {
+               mavenCentral()
+               maven { url 'https://jitpack.io' }
+          }
+      }  
+      ```
+   2. Add the dependency
+      ```
+      dependencies {
+          implementation 'com.github.EndeRHoshI:HoshiCore:Tag'
+      }
+      ```
+      其中的 Tag 表示当前版本：[![](https://jitpack.io/v/EndeRHoshI/HoshiCore.svg)](https://jitpack.io/#EndeRHoshI/HoshiCore)
 ### 通过本地仓库引入
 1. 打包上传到本地 Maven 仓库，如果仓库中已有所需的版本，跳过该步骤
 
