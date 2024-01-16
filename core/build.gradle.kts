@@ -43,6 +43,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.2") // 协程
 
     implementation("androidx.startup:startup-runtime:1.1.1") // 统一处理初始化
+    implementation("com.github.dcendents:android-maven-gradle-plugin:2.0") // jitpack 打包插件
 }
 
 // 需要这段代码才能推上仓库，可以看看具体是什么
