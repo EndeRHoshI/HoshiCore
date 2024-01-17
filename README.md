@@ -2,7 +2,7 @@
 Hoshi 纯净核心，仅依赖最低限度的官方库，不引入其它第三方库
 
 ## 使用说明
-目前主要通过 Jitpack、本地 Maven 仓库或 AAR 引入
+目前主要通过 Jitpack、本地 Maven 仓库或 AAR 引入，最推荐的是 Jitpack 方式
 ### 通过 Jitpack 引入
 1. 进入 [Jitpack 官网](https://jitpack.io/)，搜索 `EndeRHoshI/HoshiCore`
 2. 点击 Get it，准备跟随 How to 中说明的来做
@@ -63,6 +63,7 @@ Hoshi 纯净核心，仅依赖最低限度的官方库，不引入其它第三�
 5. 目标项目中引用并测试
 6. 稳定后可以进行打 tag，在 AS 中的 Git 记录中右键添加 Tag
 7. 添加完后用指令 `git push origin <tagName>` 把 Tag 推到远端仓库
-8. Github 上面创建 Release，指向刚刚的 Tag，并填写变更内容，同时上传产物（这样远端引用依赖时，可以脱离本地 Maven，直接下载产物，使用 AAR 包来引入）
+8. 把 Tag 推到远端仓库后，其它项目就可以借助 Jitpack 引入了
+9. Github 上面创建 Release，指向刚刚的 Tag，并填写变更内容，同时上传产物（这样远端引用依赖时，可以脱离本地 Maven，直接下载产物，使用 AAR 包来引入）
 
-注意：尽量采用 Maven 仓库的方式发布并依赖，除非项目足够简单只需要引用 HoshiCore，否则单纯使用 AAR 包的话，把 AAR 再打进另一个库（比如 HoshiArmor）并不是简单的事情
+注意：尽量采用 Jitpack 或 Maven 仓库的方式发布并依赖，除非项目足够简单只需要引用 HoshiCore，否则使用 AAR 包的话，把 AAR 再打进另一个库（比如 HoshiArmor）并不是简单的事情，研究过一下，目前似乎只能通过 fat-aar 来处理，但是 fat-aar 已经不维护了，而且处理起来还是非常麻烦，所以干脆尽量不要用 AAR 的方式了
