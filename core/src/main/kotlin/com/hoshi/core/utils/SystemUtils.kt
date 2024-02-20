@@ -6,6 +6,7 @@ import android.location.LocationManager
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
+import android.telephony.TelephonyManager
 import java.util.Locale
 
 /**
@@ -161,5 +162,16 @@ object SystemUtils {
      * @return Boolean 是否存在 SDCard
      */
     private fun isSDCardExist() = Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED
+
+    /**
+     * 检查是否有 sim 卡
+     * @param context Context
+     * @return Boolean 否有 sim 卡
+     */
+    fun hasSimCard(context: Context): Boolean {
+        val telMgr = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+        val simState = telMgr.simState
+        return simState != TelephonyManager.SIM_STATE_ABSENT && simState != TelephonyManager.SIM_STATE_UNKNOWN  // 当处于这两种状态下时，就是没有 SIM 卡
+    }
 
 }
