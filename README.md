@@ -59,15 +59,29 @@ Hoshi 纯净核心，仅依赖最低限度的官方库，不引入其它第三�
     ```
 ## 发布步骤
 1. 首先在 core 模块中写好代码
-2. 在 app 中写测试代码查看效果
-3. 在 local-maven.gradle 的 artifactVersion 中正确填写当前版本号
-4. 运行 Gradle 快捷指令列表中的 publishing 中的 publishToMavenLocal
-5. 目标项目中引用并测试
-6. 稳定后可以进行打 tag，在 AS 中的 Git 记录中右键添加 Tag
-7. 添加完后用指令 `git push origin <tagName>` 把 Tag 推到远端仓库
-8. 把 Tag 推到远端仓库后，其它项目就可以借助 Jitpack 引入了
-9. Github 上面创建 Release，指向刚刚的 Tag，并填写变更内容，同时上传产物（这样远端引用依赖时，可以脱离本地 Maven，直接下载产物，使用 AAR 包来引入）
+2. 在 app 模块中写测试代码，运行起来查看效果
+3. 进行上传构建
+   * 本地构建，上传到本地 Maven 仓库
+     1. core lib 中的 build.gradle.kts 的 `apply("../local-maven.gradle")` 不要注释
+     2. 在 local-maven.gradle 的 artifactVersion 中正确填写当前版本号
+     3. 运行 Gradle 快捷指令列表中的 publishing 中的 publishToMavenLocal
+     4. 目标项目中引用并测试
+   * 使用 Jitpack 发布
+     1. core lib 中的 build.gradle.kts 的 `apply("../local-maven.gradle")` 要注释掉
+     2. 在 AS 中的 Git 记录中右键添加 Tag
+     3. 添加完后用指令 `git push origin <tagName>` 把 Tag 推到远端仓库
+     4. 进入 Jitpack 官网，点一下 get it 让其构建，构建成功后，其它项目就可以引入了
+4.  Github 上面创建 Release，指向刚刚的 Tag，并填写变更内容，同时上传产物（这样远端引用依赖时，可以脱离本地 Maven，直接下载产物，使用 AAR 包来引入）
 
-注意： 尽量采用 Jitpack 或 Maven 仓库的方式发布并依赖，除非项目足够简单只需要引用 HoshiCore，否则使用 AAR 包的话，把 AAR 再打进另一个库（比如 HoshiArmor）并不是简单的事情
+### 注意
+#### 为何推荐选择 Jitpack 或 Maven
+尽量采用 Jitpack 或 Maven 仓库的方式发布并依赖，除非项目足够简单只需要引用 HoshiCore，否则使用 AAR 包的话，把 AAR 再打进另一个库（比如 HoshiArmor）并不是简单的事情
 
 举个例子，之前尝试过，如果 HoshiCore 作为一个项目，打出一个 HoshiCore.aar 后，再由 HoshiArmor 引用，直接跑起来时是可以的，但是你要把 HoshiCore.aar 打进 HoshiArmor.aar 中，就比较麻烦，之前经过一些摸索，都没有处理好。目前似乎只能通过 fat-aar 来处理，但是 fat-aar 已经不维护了，而且处理起来还是非常麻烦，所以干脆尽量不要用 AAR 的方式了。
+
+#### 本地 Maven 和 Jitpack 小插曲
+上述步骤中的 3 存在一些差异，要区分本地 Maven 仓库的方式和 Jitpack 发布的方式，这是因为，在某次更新中，Jitpack 死活无法成功构建，报错如下，大致意思是运行 publishAarPublicationToMavenLocal 这个 task 时出了问题
+
+![](./jitpack_build_error.png)
+
+具体原因不明，之前是没有问题的，但是既然出现了问题，那么我们区分一下，在需要本地打包时，才使用本地打包的配置，否则不作过多的引入，在不需要本地配置时，把 core lib 中的 build.gradle.kts 的 `apply("../local-maven.gradle")` 注释掉即可

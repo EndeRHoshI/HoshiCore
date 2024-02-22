@@ -3,7 +3,7 @@ plugins {
     id("kotlin-android")
     id("maven-publish")
 }
-// apply("../local-maven.gradle")
+// apply("../local-maven.gradle") // 需要上传本地 Maven 仓库时才使用，否则不要解除注释
 
 android {
     sourceSets.getByName("main") {
@@ -43,7 +43,9 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.2") // 协程
 
     implementation("androidx.startup:startup-runtime:1.1.1") // 统一处理初始化
-    implementation("com.github.dcendents:android-maven-gradle-plugin:2.1") // jitpack 打包插件
+
+    // jitpack 打包插件，最新版本可从 https://plugins.gradle.org/plugin/com.github.dcendents.android-maven 查看
+    implementation("com.github.dcendents:android-maven-gradle-plugin:2.1")
 }
 
 // 需要这段代码才能推上仓库，可以看看具体是什么
