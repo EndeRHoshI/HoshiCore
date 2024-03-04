@@ -3,18 +3,19 @@ plugins {
     id("kotlin-android")
     id("maven-publish")
 }
-// apply("../local-maven.gradle") // 需要上传本地 Maven 仓库时才使用，否则不要解除注释
+// apply("../local-maven.gradle") // 提交代码时记得检查下这里，需要上传本地 Maven 仓库时才使用，否则不要解除注释
 
+@Suppress("UnstableApiUsage") // 去掉一些不稳定 Api 的警告
 android {
     sourceSets.getByName("main") {
         java.srcDirs("src/main/kotlin")
     }
 
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 23
-        targetSdk = 33
+        targetSdk = 34
 
         consumerProguardFiles("consumer-rules.pro")
     }
