@@ -71,7 +71,7 @@ Hoshi 纯净核心，仅依赖最低限度的官方库，不引入其它第三�
      2. 在 AS 中的 Git 记录中右键添加 Tag
      3. 添加完后用指令 `git push origin <tagName>` 把 Tag 推到远端仓库
      4. 进入 Jitpack 官网，点一下 get it 让其构建，构建成功后，其它项目就可以引入了
-4.  Github 上面创建 Release，指向刚刚的 Tag，并填写变更内容，同时上传产物（这样远端引用依赖时，可以脱离本地 Maven，直接下载产物，使用 AAR 包来引入）
+4.  Github 上面创建 Release，指向刚刚的 Tag，并填写变更内容，同时上传产物（这样使用 AAR 包来引入时可以直接下载来用）
 
 ### 注意
 #### 为何推荐选择 Jitpack 或 Maven
