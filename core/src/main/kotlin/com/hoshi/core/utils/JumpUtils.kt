@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.provider.Settings
 
 /**
  * 跳转工具类，跳转到各种第三方页面
@@ -68,4 +69,16 @@ object JumpUtils {
         }
         return packageInfo != null
     }
+
+    /**
+     * 跳转到应用详情页面
+     */
+    private fun routeToAppDetail(context: Context) {
+        Intent().apply {
+            action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+            data = Uri.parse("package:${context.packageName}")
+            context.startActivity(this)
+        }
+    }
+
 }
