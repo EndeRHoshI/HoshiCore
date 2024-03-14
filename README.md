@@ -42,7 +42,7 @@ Hoshi 纯净核心，仅依赖最低限度的官方库，不引入其它第三�
     ```
 3. 引入仓库并同步，仓库格式规则为：`${artifactGroup}:${artifactBuildId}:${artifactVersion}`
     ```
-    implementation 'com.hoshi.lib:hoshi-core:0.0.3'
+    implementation 'com.hoshi.lib:hoshi-core:0.0.7'
     ```
 ### 通过 AAR 包来引入
 1. 下载 AAR
@@ -51,7 +51,7 @@ Hoshi 纯净核心，仅依赖最低限度的官方库，不引入其它第三�
 
 2. 将 AAR 放到 app/src 同级的 libs 文件夹下，build.gradle 中引入 AAR 并同步
     ```
-    implementation(files("./libs/hoshi-core-0.0.3.aar"))
+    implementation(files("./libs/hoshi-core-0.0.7.aar"))
     ```
    如果不使用 KTS，则是如下代码即可
     ```

@@ -8,4 +8,5 @@ object CommonConst {
     const val DATA = "data"
     const val MESSAGE = "message"
     const val CODE = "code"
+    const val TITLE = "title"
 }

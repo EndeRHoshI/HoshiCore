@@ -3,17 +3,18 @@ plugins {
     id("kotlin-android")
 }
 
+@Suppress("UnstableApiUsage") // 去掉一些不稳定 Api 的警告
 android {
     sourceSets.getByName("main") {
         java.srcDirs("src/main/kotlin")
     }
 
-    compileSdk = 32
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.hoshi.core"
         minSdk = 23
-        targetSdk = 32
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
     }
