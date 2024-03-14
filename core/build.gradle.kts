@@ -26,6 +26,7 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -38,10 +39,10 @@ android {
 
 dependencies {
     // 只在本模块依赖，因为打成 aar 之后不能传递，后续可以考虑连需要这些依赖的地方都移除掉
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.appcompat:appcompat:1.4.1")
-    implementation("com.google.android.material:material:1.5.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.2") // 协程
+    implementation(Strings.androidXCoreKtx)
+    implementation(Strings.androidXAppCompat)
+    implementation("com.google.android.material:material:1.9.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1") // 协程
 
     implementation("androidx.startup:startup-runtime:1.1.1") // 统一处理初始化
 
