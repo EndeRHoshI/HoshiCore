@@ -9,12 +9,12 @@ android {
         java.srcDirs("src/main/kotlin")
     }
 
-    compileSdk = 34
+    compileSdk = Versions.compileSdk
 
     defaultConfig {
-        applicationId = "com.hoshi.core"
-        minSdk = 23
-        targetSdk = 34
+        applicationId = Strings.applicationId
+        minSdk = Versions.minSdk
+        targetSdk = Versions.targetSdk
         versionCode = 1
         versionName = "1.0"
     }

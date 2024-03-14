@@ -11,11 +11,11 @@ android {
         java.srcDirs("src/main/kotlin")
     }
 
-    compileSdk = 34
+    compileSdk = Versions.compileSdk
 
     defaultConfig {
-        minSdk = 23
-        targetSdk = 34
+        minSdk = Versions.minSdk
+        targetSdk = Versions.targetSdk
 
         consumerProguardFiles("consumer-rules.pro")
     }
