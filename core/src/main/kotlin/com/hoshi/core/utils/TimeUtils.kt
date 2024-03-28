@@ -104,9 +104,7 @@ object TimeUtils {
     fun getSimpleDateFormat(
         pattern: String,
         locale: Locale = Locale.getDefault()
-    ) = SimpleDateFormat(pattern, locale).apply {
-        timeZone = TIMEZONE_CHINA
-    }
+    ) = SimpleDateFormat(pattern, locale)
 
     /**
      * 倒计时，注意 onCompletion 除了在倒计时结束时调用，也会在生命周期结束时调用，如果有要求，需要另外处理
@@ -184,7 +182,6 @@ object TimeUtils {
     fun getFormattedTime(timeMillis: Long?, pattern: String = "yyyy-MM-dd HH:mm:ss", locale: Locale = Locale.getDefault()): String {
         timeMillis ?: return ""
         val sdf = getSimpleDateFormat(pattern, locale)
-        sdf.timeZone = TIMEZONE_CHINA
         return sdf.format(Date(timeMillis))
     }
 
@@ -193,7 +190,9 @@ object TimeUtils {
      * @param timeMillis 某个时间
      */
     fun getStartTimeOfOneDay(timeMillis: Long): Long {
-        val cal = Calendar.getInstance(TIMEZONE_CHINA)
+        // 每个不同时区、地区的月开始时间不一样，读取 Default 是比较合理的，通过 TimeZone.getTimeZone("GMT+8") 来取会取到中国时区的月开始时间
+        // 这时候在不同时区下去转化这个时间戳，反而会获得不同的月份
+        val cal = Calendar.getInstance()
         cal.time = Date(timeMillis)
         cal.set(Calendar.HOUR_OF_DAY, 0)
         cal.set(Calendar.MINUTE, 0)
@@ -207,7 +206,7 @@ object TimeUtils {
      * @param timeMillis 某个时间
      */
     fun getEndTimeOfOneDay(timeMillis: Long): Long {
-        val cal = Calendar.getInstance(TIMEZONE_CHINA)
+        val cal = Calendar.getInstance()
         cal.time = Date(timeMillis)
         cal.set(Calendar.HOUR_OF_DAY, 23)
         cal.set(Calendar.MINUTE, 59)
@@ -220,7 +219,7 @@ object TimeUtils {
      * 获取下一天的时刻
      */
     fun getNextDayMs(timeMillis: Long): Long {
-        val cal = Calendar.getInstance(TIMEZONE_CHINA)
+        val cal = Calendar.getInstance()
         cal.timeInMillis = timeMillis
         cal.add(Calendar.DAY_OF_MONTH, 1) // 加一天
         return cal.timeInMillis
@@ -230,7 +229,7 @@ object TimeUtils {
      * 获取前一天的时刻
      */
     fun getPreDayMs(timeMillis: Long): Long {
-        val cal = Calendar.getInstance(TIMEZONE_CHINA)
+        val cal = Calendar.getInstance()
         cal.timeInMillis = timeMillis
         cal.add(Calendar.DAY_OF_MONTH, -1) // 减一天
         return cal.timeInMillis
@@ -240,7 +239,7 @@ object TimeUtils {
      * 获取月的开始时间
      */
     fun getStartTimeOfMonth(timeMillis: Long, amount: Int = 0): Long {
-        val cal = Calendar.getInstance(TIMEZONE_CHINA)
+        val cal = Calendar.getInstance()
         cal.timeInMillis = timeMillis
         //前几个月/后几个月
         cal.add(Calendar.MONTH, amount)
@@ -257,7 +256,7 @@ object TimeUtils {
      * 获取月的结束时间
      */
     fun getEndTimeOfMonth(timeMillis: Long, amount: Int = 0): Long {
-        val cal = Calendar.getInstance(TIMEZONE_CHINA)
+        val cal = Calendar.getInstance()
         cal.timeInMillis = timeMillis
         //前几个月/后几个月
         cal.add(Calendar.MONTH, amount)
@@ -275,7 +274,7 @@ object TimeUtils {
      */
     fun getCurrentMin(): Long {
         val currentTime = System.currentTimeMillis()
-        val cal = Calendar.getInstance(TIMEZONE_CHINA)
+        val cal = Calendar.getInstance()
         cal.time = Date(currentTime)
         cal.set(Calendar.SECOND, 0)
         cal.set(Calendar.MILLISECOND, 0)
