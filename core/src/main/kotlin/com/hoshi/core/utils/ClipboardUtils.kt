@@ -14,8 +14,7 @@ object ClipboardUtils {
     @JvmStatic
     fun copyText(
         context: Context,
-        text: String,
-        showToast: Boolean = true
+        text: String
     ) {
         val cm: ClipboardManager? = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
         cm?.setPrimaryClip(ClipData.newPlainText("text", text)) // 把数据复制到剪贴板
@@ -77,4 +76,5 @@ object ClipboardUtils {
             clip.getItemAt(0).intent
         } else null
     }
+
 }
