@@ -65,7 +65,7 @@ Hoshi 纯净核心，仅依赖最低限度的官方库，不引入其它第三�
       1. core lib 中的 build.gradle.kts 的 `apply("../local-maven.gradle")` 不要注释
       2. 在 local-maven.gradle 的 artifactVersion 中正确填写当前版本号
       3. 运行 Gradle 快捷指令列表中 Tasks 中的 publishing 中的 publishToMavenLocal
-      4. 运行完成应该就有产物在本地仓库中（具体路径上文中有），这时候有需要的话，可以在目标项目中引用并测试
+      4. 运行完成应该就有产物在本地仓库中（具体路径上文中有），最好先在目标项目中引用并测试，测试没问题再继续下面的步骤，因为一旦出错，要重新打包的话，Jitpack 不能直接在原来的 tag 上再进行构建
    2. 使用 Jitpack 发布
       1. core lib 中的 build.gradle.kts 的 `apply("../local-maven.gradle")` 要注释掉
       2. 在 AS 中的 Git 记录中右键添加 Tag
