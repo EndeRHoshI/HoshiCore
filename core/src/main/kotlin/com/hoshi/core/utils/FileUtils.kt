@@ -348,10 +348,10 @@ object FileUtils {
  * 文件单位
  * @property step 当前级别，用于计算两个单位之间相差多少个级别
  */
-sealed class Unit(val step: Int) {
-    object Byte : Unit(0)
-    object KB : Unit(1)
-    object MB : Unit(2)
-    object GB : Unit(3)
-    object TB : Unit(4)
+sealed class FileUnit(private val step: Int) {
+    data object Byte : FileUnit(0)
+    data object KB : FileUnit(1)
+    data object MB : FileUnit(2)
+    data object GB : FileUnit(3)
+    data object TB : FileUnit(4)
 }
