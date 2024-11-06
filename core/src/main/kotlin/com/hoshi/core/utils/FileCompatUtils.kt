@@ -1,4 +1,4 @@
-package com.hoshi.armor.utils
+package com.hoshi.core.utils
 
 /**
  * Created by lv.qx on 2023/11/21
