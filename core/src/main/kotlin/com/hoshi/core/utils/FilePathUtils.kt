@@ -1,4 +1,4 @@
-package com.hoshi.armor.utils
+package com.hoshi.core.utils
 
 import android.os.Environment
 
