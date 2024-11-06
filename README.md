@@ -60,18 +60,18 @@ Hoshi 纯净核心，仅依赖最低限度的官方库，不引入其它第三�
 ## 发布步骤
 1. 首先在 core 模块中写好代码
 2. 在 app 模块中写测试代码，运行起来查看效果
-3. 进行上传构建
-   * 本地构建，上传到本地 Maven 仓库
-     1. core lib 中的 build.gradle.kts 的 `apply("../local-maven.gradle")` 不要注释
-     2. 在 local-maven.gradle 的 artifactVersion 中正确填写当前版本号
-     3. 运行 Gradle 快捷指令列表中的 publishing 中的 publishToMavenLocal
-     4. 目标项目中引用并测试
-   * 使用 Jitpack 发布
-     1. core lib 中的 build.gradle.kts 的 `apply("../local-maven.gradle")` 要注释掉
-     2. 在 AS 中的 Git 记录中右键添加 Tag
-     3. 添加完后用指令 `git push origin <tagName>` 把 Tag 推到远端仓库
-     4. 进入 Jitpack 官网，点一下 get it 让其构建，构建成功后，其它项目就可以引入了
-4.  Github 上面创建 Release，指向刚刚的 Tag，并填写变更内容，同时上传产物（这样使用 AAR 包来引入时可以直接下载来用）
+3. 进行上传构建，这里分为两步，两步都要做
+   1. 本地构建，上传到本地 Maven 仓库
+      1. core lib 中的 build.gradle.kts 的 `apply("../local-maven.gradle")` 不要注释
+      2. 在 local-maven.gradle 的 artifactVersion 中正确填写当前版本号
+      3. 运行 Gradle 快捷指令列表中 Tasks 中的 publishing 中的 publishToMavenLocal
+      4. 运行完成应该就有产物在本地仓库中（具体路径上文中有），这时候有需要的话，可以在目标项目中引用并测试
+   2. 使用 Jitpack 发布
+      1. core lib 中的 build.gradle.kts 的 `apply("../local-maven.gradle")` 要注释掉
+      2. 在 AS 中的 Git 记录中右键添加 Tag
+      3. 添加完后用指令 `git push origin <tagName>` 把 Tag 推到远端仓库
+      4. 进入 Jitpack 官网，点一下 get it 让其构建，构建成功后，其它项目就可以引入了
+4.  Github 上面创建 Release，指向刚刚的 Tag，并填写变更内容，同时上传本地构建的产物（这样使用 AAR 包来引入时可以直接下载来用）
 
 ### 注意
 #### 为何推荐选择 Jitpack 或 Maven
