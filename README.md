@@ -68,9 +68,10 @@ Hoshi 纯净核心，仅依赖最低限度的官方库，不引入其它第三�
       4. 运行完成应该就有产物在本地仓库中（具体路径上文中有），最好先在目标项目中引用并测试，测试没问题再继续下面的步骤，因为一旦出错，要重新打包的话，Jitpack 不能直接在原来的 tag 上再进行构建
    2. 使用 Jitpack 发布
       1. core lib 中的 build.gradle.kts 的 `apply("../local-maven.gradle")` 要注释掉
-      2. 在 AS 中的 Git 记录中右键添加 Tag
-      3. 添加完后用指令 `git push origin <tagName>` 把 Tag 推到远端仓库
-      4. 进入 Jitpack 官网，点一下 get it 让其构建，构建成功后，其它项目就可以引入了
+      2. 推送到远端仓库
+      3. 在 AS 中的 Git 记录中右键添加 Tag
+      4. 添加完后用指令 `git push origin <tagName>` 把 Tag 推到远端仓库
+      5. 进入 Jitpack 官网，点一下 get it 让其构建，构建成功后，其它项目就可以引入了
 4.  Github 上面创建 Release，指向刚刚的 Tag，并填写变更内容，同时上传本地构建的产物（这样使用 AAR 包来引入时可以直接下载来用）
 
 ### 注意
