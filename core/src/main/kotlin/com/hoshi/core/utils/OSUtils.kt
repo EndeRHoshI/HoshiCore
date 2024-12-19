@@ -1,7 +1,8 @@
 package com.hoshi.core.utils
 
-import android.os.Build
-
+/**
+ * 操作系统工具类，与 System 的区别是，这个工具类主要负责各个不同厂商系统的不同工具方法，比如 EMUI、小米系统、魅族 Flyme、一加 ColorOS 等这些
+ */
 object OSUtils {
 
     private const val TAG = "OSUtils"
@@ -19,25 +20,23 @@ object OSUtils {
     }
 
     /**
-     * 判断是否为emui
+     * 判断是否为 emui
      * Is emui boolean.
      *
      * @return the boolean
      */
     fun isEMUI(): Boolean {
-        val property: String = getSystemProperty(KEY_EMUI_VERSION_NAME)
+        val property = getSystemProperty(KEY_EMUI_VERSION_NAME)
         return property.isNotEmpty()
     }
 
     /**
-     * 得到emui的版本
+     * 得到 emui 的版本
      * Gets emui version.
      *
      * @return the emui version
      */
-    fun getEMUIVersion(): String {
-        return if (isEMUI()) getSystemProperty(KEY_EMUI_VERSION_NAME) else ""
-    }
+    fun getEMUIVersion() = if (isEMUI()) getSystemProperty(KEY_EMUI_VERSION_NAME) else ""
 
     /**
      * 判断 emui 系统是否大于等于某个版本
@@ -84,125 +83,4 @@ object OSUtils {
         return ""
     }
 
-    /**
-     * 获取手机厂商
-     *
-     * @return  手机厂商
-     */
-    fun getManufacturer(): String {
-        return Build.MANUFACTURER
-    }
-
-    /**
-     * 获取手机型号
-     *
-     * @return  手机型号
-     */
-    fun getModel(): String {
-        return Build.MODEL
-    }
-
-    /**
-     * 获取 Android 系统版本号
-     *
-     * @return  Android 系统版本号
-     */
-    fun getAndroidVersion(): String {
-        return Build.VERSION.RELEASE
-    }
-
-    /**
-     * 获取手机品牌
-     *
-     * @return  手机品牌
-     */
-    fun getBrand(): String {
-        return Build.BRAND
-    }
-
-    /**
-     * 获取手机系统版本号
-     *
-     * @return  系统版本号
-     * @see Build.ID 可能和 Build.ID 一致
-     */
-    fun getDisplay(): String {
-        return Build.DISPLAY
-    }
-
-    /**
-     * 获取基带版本
-     *
-     * @return  基带版本，一般格式为 "angler-03.88"
-     * 部分机型无法取得，显示 unknown
-     */
-    fun getRadio(): String {
-        return Build.getRadioVersion()
-    }
-
-    /**
-     * 获取手机系统内核源代码代号
-     *
-     * @return  系统内核源代码代号
-     * 可能和以下参数一致
-     * @see Build.BOOTLOADER
-     * @see Build.RADIO 基带版本
-     * @see Build.ID
-     * @see Build.DEVICE
-     * @see Build.HARDWARE
-     */
-    fun getProduct(): String {
-        return Build.PRODUCT
-    }
-
-    /**
-     * 获取手机硬件版本号
-     *
-     * @return  硬件版本号
-     * 可能和以下参数一致
-     * @see Build.PRODUCT
-     * @see Build.BOOTLOADER
-     * @see Build.RADIO
-     * @see Build.ID
-     * @see Build.DEVICE
-     */
-    fun getHardware(): String {
-        return Build.HARDWARE
-    }
-
-    /**
-     * 获取 CPU_ABI
-     *
-     * @return  CPU_ABI
-     */
-    fun getCpu(): String {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Build.SUPPORTED_ABIS.toMutableList().toString()
-        } else {
-            Build.CPU_ABI
-        }
-    }
-
-    /**
-     * 获取 SERIAL
-     *
-     * @return  SERIAL
-     * 部分机型无法取得，显示 unknown
-     */
-    fun getSerial(): String {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            "版本高于 8.0，可能需要权限" // android.permission.READ_PRIVILEGED_PHONE_STAT
-        } else {
-            Build.SERIAL
-        }
-    }
-
-    /**
-     * 获取出厂时间
-     *
-     * @return  出厂时间
-     */
-    fun getTime(): Long {
-        return Build.TIME
-    }
 }

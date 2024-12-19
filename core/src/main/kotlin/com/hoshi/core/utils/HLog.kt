@@ -42,7 +42,7 @@ object HLog {
     }
 
     @JvmStatic
-    fun e(tag: String, msg: String, exception: Throwable? = null) {
+    fun e(tag: String = DEFAULT_TAG, msg: String, exception: Throwable? = null) {
         Log.e(tag, msg, exception)
     }
 

@@ -16,7 +16,7 @@ android {
         minSdk = Versions.minSdk
         targetSdk = Versions.targetSdk
         versionCode = 1
-        versionName = "1.0"
+        versionName = Versions.coreVersion
     }
 
     buildTypes {
@@ -29,10 +29,12 @@ android {
             // 如果你想进一步压缩代码就可以改使用 getDefaultProguardFile("proguard-android-optimize.txt") ，但是会更加耗时
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
