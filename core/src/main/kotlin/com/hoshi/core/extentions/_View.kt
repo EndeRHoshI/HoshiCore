@@ -9,6 +9,9 @@ import android.view.animation.LinearInterpolator
 import android.view.animation.RotateAnimation
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.ImageView
+import androidx.annotation.ColorInt
+import androidx.core.graphics.drawable.DrawableCompat
 
 /**
  * 隐藏软键盘
@@ -61,4 +64,10 @@ fun EditText.adjustRange(start: Int, end: Int) {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
     })
+}
+
+fun ImageView.setTint(@ColorInt colorInt: Int) {
+    val drawable = drawable
+    DrawableCompat.setTint(drawable, colorInt)
+    setImageDrawable(drawable)
 }

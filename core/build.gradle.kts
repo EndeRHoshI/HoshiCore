@@ -39,6 +39,7 @@ android {
 
 dependencies {
     // 只在本模块依赖，因为打成 aar 之后不能传递，后续可以考虑连需要这些依赖的地方都移除掉
+    implementation(Strings.androidXCore)
     implementation(Strings.androidXCoreKtx)
     implementation(Strings.androidXAppCompat)
     implementation("com.google.android.material:material:1.9.0")
