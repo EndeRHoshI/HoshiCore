@@ -7,6 +7,7 @@ plugins {
 
 @Suppress("UnstableApiUsage") // 去掉一些不稳定 Api 的警告
 android {
+    namespace = "com.hoshi.core" // 新版本 AGP 整出来的东西，新建项目会自带
     sourceSets.getByName("main") {
         java.srcDirs("src/main/kotlin")
     }

@@ -2,6 +2,7 @@ package com.hoshi.core.utils
 
 import android.content.Context
 import android.content.res.Configuration
+import android.os.Build
 import android.util.DisplayMetrics
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatDelegate
@@ -18,12 +19,22 @@ object DisplayUtils {
      * @param context
      * @return
      */
+    @JvmStatic
     fun getScreenSize(context: Context): Pair<Int, Int> {
         val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        val dm = DisplayMetrics()
-        wm.defaultDisplay.getMetrics(dm)
-        val height = dm.heightPixels
-        val width = dm.widthPixels
+        val width: Int
+        val height: Int
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val windowMetrics = wm.currentWindowMetrics
+            val bounds = windowMetrics.bounds
+            width = bounds.width()
+            height = bounds.height()
+        } else {
+            val dm = DisplayMetrics()
+            wm.defaultDisplay.getMetrics(dm)
+            width = dm.widthPixels
+            height = dm.heightPixels
+        }
         return Pair(width, height)
     }
 

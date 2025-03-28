@@ -1,5 +1,5 @@
 object Versions {
-    private const val compileAndTargetSdk = 34
+    private const val compileAndTargetSdk = 35
     const val coreVersion = "1.0.1"
     const val compileSdk = compileAndTargetSdk
     const val targetSdk = compileAndTargetSdk
