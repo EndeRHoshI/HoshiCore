@@ -52,6 +52,7 @@ object TimeUtils {
 
                 return getCommonTimeFormat(sec)
             }
+
             MIN -> {
                 if (diffTime < 0) return getCommonTimeFormat(sec, min)
 
@@ -60,6 +61,7 @@ object TimeUtils {
 
                 return getCommonTimeFormat(sec, min)
             }
+
             HOUR -> {
                 if (diffTime < 0) return getCommonTimeFormat(sec, min, hour)
 
@@ -69,6 +71,7 @@ object TimeUtils {
 
                 return getCommonTimeFormat(sec, min, hour)
             }
+
             DAY -> {
                 if (diffTime < 0) return getCommonTimeFormat(sec, min, hour, day)
 
@@ -79,6 +82,7 @@ object TimeUtils {
 
                 return getCommonTimeFormat(sec, min, hour, day)
             }
+
             else -> return getCommonTimeFormat(sec, min, hour, day)
         }
     }
@@ -116,18 +120,20 @@ object TimeUtils {
      */
     fun countDown(
         total: Int,
-        onTick: (Int) -> kotlin.Unit,
-        onFinish: () -> kotlin.Unit,
+        onTick: (Int) -> Unit,
+        onFinish: (cause: Throwable?) -> Unit,
         tickMillis: Long = 1000,
         scope: CoroutineScope = MainScope()
-    ) {
-        flow {
-            for (i in total downTo 1) {
-                emit(i)
-                delay(tickMillis)
+    ): Job {
+        return flow {
+            for (i in total downTo 0) {
+                emit(i) // 先把结果发射，假设倒计时 100，要先发射 100，然后再 delay 指定时间
+                if (i != 0) {
+                    delay(tickMillis) // 不为 0 时，都要 delay，如果为 0 了，说明倒计时到 0 了，不需要再 delay 了，就可以结束了
+                }
             }
         }.flowOn(Dispatchers.Default)
-            .onCompletion { onFinish.invoke() }
+            .onCompletion { onFinish.invoke(it) }
             .onEach { onTick.invoke(it) }
             .flowOn(Dispatchers.Main)
             .launchIn(scope)

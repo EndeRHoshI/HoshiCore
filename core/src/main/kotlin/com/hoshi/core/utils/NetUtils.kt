@@ -12,6 +12,7 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.Inet4Address
 import java.net.NetworkInterface
+import java.util.Collections
 
 /**
  * 网络工具类，部分方法参考自：https://juejin.cn/post/7098947365976932383
@@ -25,28 +26,17 @@ object NetUtils {
      * 获取当前网络的 ip 地址
      * @return String
      */
-    fun getIp(): String {
-        runCatching {
-            val networkInterfaces = NetworkInterface.getNetworkInterfaces() // 获取本机所有的网络接口
-            while (networkInterfaces.hasMoreElements()) {  // 判断 Enumeration 对象中是否还有数据
-                val networkInterface = networkInterfaces.nextElement()   // 获取 Enumeration 对象中的下一个数据
-                if (!networkInterface.isUp) { // 判断网口是否在使用
-                    continue
-                }
-                if (interfaceName != networkInterface.displayName) { // 网口名称是否和需要的相同
-                    continue
-                }
-                val inetAddresses = networkInterface.inetAddresses   // getInetAddresses 方法返回绑定到该网卡的所有的 ip 地址
-                while (inetAddresses.hasMoreElements()) {
-                    val inetAddress = inetAddresses.nextElement()
-                    if (inetAddress is Inet4Address) {  //判断是否为 ipv4
-                        return inetAddress.getHostAddress() ?: "0.0.0.0"
+    private fun getIp(): String {
+        NetworkInterface.getNetworkInterfaces().let {
+            loo@ for (networkInterface in Collections.list(it)) {
+                for (inetAddresses in Collections.list(networkInterface.inetAddresses)) {
+                    if (inetAddresses is Inet4Address && !inetAddresses.isLoopbackAddress && !inetAddresses.isLinkLocalAddress) {
+                        return inetAddresses.hostAddress ?: "0.0.0.0"
                     }
                 }
-                return "0.0.0.0"
             }
-        }.onFailure { HLog.e(it) }
-        return "0.0.0.0"
+        }
+        return "没有 ip"
     }
 
     /**

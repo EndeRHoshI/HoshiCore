@@ -342,6 +342,26 @@ object FileUtils {
      */
     fun isSDCardEnable() = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)
 
+    /**
+     * 写入到 txt 文件中
+     * 后续可以抽出到工具类中
+     * @param content String 写入内容
+     */
+    fun writeToTxt(txtPath: String, content: String) {
+        val txtFile = File(txtPath)
+        writeToTxt(txtFile, content)
+    }
+
+    /**
+     * 写入到 txt 文件中
+     * 后续可以抽出到工具类中
+     * @param content String 写入内容
+     */
+    fun writeToTxt(txtFile: File, content: String) {
+        val outputStream = FileOutputStream(txtFile)
+        outputStream.use { it.write(content.toByteArray()) }
+    }
+
 }
 
 /**

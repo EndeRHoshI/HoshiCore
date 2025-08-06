@@ -1,5 +1,6 @@
 package com.hoshi.core.utils
 
+import android.app.Activity
 import android.content.Context
 
 /**
@@ -16,6 +17,14 @@ object AppUtils {
             context.packageManager.getPackageInfo(packageName, 0) // 如果应用程序不存在，会抛出 PackageManager.NameNotFoundException 异常
         }.onFailure { return false }
         return true
+    }
+
+    /**
+     * 获取活动名
+     */
+    fun getActName(activity: Activity): String {
+        val fullName = activity.localClassName
+        return fullName.substring(fullName.lastIndexOf(".") + 1)
     }
 
 }
