@@ -1,9 +1,8 @@
 plugins {
     id("com.android.library")
     id("kotlin-android")
-    id("maven-publish")
+    `maven-publish`
 }
-// apply("../local-maven.gradle") // 提交代码时记得检查下这里，需要上传本地 Maven 仓库时才使用，否则不要解除注释
 
 @Suppress("UnstableApiUsage") // 去掉一些不稳定 Api 的警告
 android {
@@ -53,11 +52,21 @@ dependencies {
 }
 
 // 需要这段代码才能推上仓库，可以看看具体是什么
-project.afterEvaluate {
-    publishing {
-        publications {
-            register("release", MavenPublication::class) {
+publishing {
+    publications {
+        register<MavenPublication>("release") {
+            groupId = "com.hoshi.lib"
+            artifactId = "hoshi-${Versions.libName}"
+            version = Versions.coreVersion
+
+            afterEvaluate {
                 from(components["release"])
+            }
+        }
+        repositories {
+            maven {
+                name = Versions.libName
+                url = uri(layout.buildDirectory.dir(Versions.libName))
             }
         }
     }

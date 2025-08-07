@@ -60,18 +60,17 @@ Hoshi 纯净核心，仅依赖最低限度的官方库，不引入其它第三�
 ## 发布步骤
 1. 首先在 core 模块中写好代码
 2. 在 app 模块中写测试代码，运行起来查看效果
-3. 进行上传构建，这里分为两步，两步都要做，但是当前在公司 Mac 开发环境下无法正常使用本地 Maven（首先报错说 sourceJar 里面的方法不对，改了方法名之后又说依赖顺序有问题），暂时跳过了，下次可以换个环境试试，或者尝试彻底解决
+3. 进行上传构建，这里分为两步，两步都要做
    1. 本地构建，上传到本地 Maven 仓库
-      1. core lib 中的 build.gradle.kts 的 `apply("../local-maven.gradle")` 不要注释
-      2. 在 local-maven.gradle 的 artifactVersion 中正确填写当前版本号
-      3. 运行 Gradle 快捷指令列表中 Tasks 中的 publishing 中的 publishToMavenLocal
-      4. 运行完成应该就有产物在本地仓库中（具体路径上文中有），最好先在目标项目中引用并测试，测试没问题再继续下面的步骤，因为一旦出错，要重新打包的话，Jitpack 不能直接在原来的 tag 上再进行构建
-   2. 使用 Jitpack 发布
-      1. core lib 中的 build.gradle.kts 的 `apply("../local-maven.gradle")` 要注释掉
-      2. 推送到远端仓库
-      3. 在 AS 中的 Git 记录中右键添加 Tag
-      4. 添加完后用指令 `git push origin <tagName>` 把 Tag 推到远端仓库
-      5. 进入 Jitpack 官网，点一下 get it 让其构建，构建成功后，其它项目就可以引入了
+      1. 在 Dependencies 的 Versions.coreVersion 中正确填写当前版本号
+      2. 运行 Gradle 快捷指令列表中 Tasks 中的 publishing 中的 publishReleasePublicationTo<MyRepo>Repository
+      3. 运行完成后，应该就有产物在项目的 build 文件夹中的 repo 目录下生成
+      4. 最好先在目标项目中引用并测试，测试没问题再继续下面的步骤，因为一旦出错，要重新打包的话，Jitpack 不能直接在原来的 tag 上再进行构建
+   2. 使用 Jitpack 发布 
+      1. 推送到远端仓库
+      2. 在 AS 中的 Git 记录中右键添加 Tag
+      3. 添加完后用指令 `git push origin <tagName>` 把 Tag 推到远端仓库
+      4. 进入 Jitpack 官网，点一下 get it 让其构建，构建成功后，其它项目就可以引入了
 4.  Github 上面创建 Release，指向刚刚的 Tag，并填写变更内容，同时上传本地构建的产物（这样使用 AAR 包来引入时可以直接下载来用）
 
 ### 注意
@@ -86,3 +85,5 @@ Hoshi 纯净核心，仅依赖最低限度的官方库，不引入其它第三�
 ![](./jitpack_build_error.png)
 
 具体原因不明，之前是没有问题的，但是既然出现了问题，那么我们区分一下，在需要本地打包时，才使用本地打包的配置，否则不作过多的引入，在不需要本地配置时，把 core lib 中的 build.gradle.kts 的 `apply("../local-maven.gradle")` 注释掉即可
+
+然后在 20250807，通过 Google Developers 找到最新的最佳实践来进行本地 Maven 打包，完美解决了本地打包的问题，详见文章：[上传库](https://developer.android.com/build/publish-library/upload-library?hl=zh-cn#kts)
