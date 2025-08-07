@@ -26,6 +26,7 @@ Hoshi 纯净核心，仅依赖最低限度的官方库，不引入其它第三�
    ```
    平时的引用，直接用 3、4 两步即可，这里写上 1、2 步只是写得更全一些，其中的 Tag 表示当前版本：[![](https://jitpack.io/v/EndeRHoshI/HoshiCore.svg)](https://jitpack.io/#EndeRHoshI/HoshiCore)
 ### 通过本地仓库引入
+更换新的 Maven 本地打包方案后，这个引入方法可能有问题，还没研究。引入步骤如下：
 1. 打包上传到本地 Maven 仓库，如果仓库中已有所需的版本，跳过该步骤
 
    详见[发布步骤](#发布步骤)
@@ -47,7 +48,7 @@ Hoshi 纯净核心，仅依赖最低限度的官方库，不引入其它第三�
 ### 通过 AAR 包来引入
 1. 下载 AAR
 
-   可以在 [releases](https://github.com/EndeRHoshI/HoshiCore/releases) 下载，或者直接到本地仓库中取得，默认本地 Maven 仓库地址：`C:\Users\userName\\.m2\repository\artifactGroup\artifactBuildId\artifactVersion`
+   可以在 [releases](https://github.com/EndeRHoshI/HoshiCore/releases) 下载，或者直接到本地仓库中取得，Windows 系统下默认本地 Maven 仓库地址：`C:\Users\userName\\.m2\repository\artifactGroup\artifactBuildId\artifactVersion`，Mac 还未处理好，相关问题还未知，打包生成 AAR 产物后直接用就好
 
 2. 将 AAR 放到 app/src 同级的 libs 文件夹下，build.gradle 中引入 AAR 并同步
     ```
@@ -63,8 +64,8 @@ Hoshi 纯净核心，仅依赖最低限度的官方库，不引入其它第三�
 3. 进行上传构建，这里分为两步，两步都要做
    1. 本地构建，上传到本地 Maven 仓库
       1. 在 Dependencies 的 Versions.coreVersion 中正确填写当前版本号
-      2. 运行 Gradle 快捷指令列表中 Tasks 中的 publishing 中的 publishReleasePublicationTo<MyRepo>Repository
-      3. 运行完成后，应该就有产物在项目的 build 文件夹中的 repo 目录下生成
+      2. 运行 Gradle 快捷指令列表中 Tasks 中的 publishing 中的 publishReleasePublicationTo\<MyRepo\>Repository
+      3. 运行完成后，应该就有产物在项目的 build 文件夹中的 \<MyRepo\> 目录下生成
       4. 最好先在目标项目中引用并测试，测试没问题再继续下面的步骤，因为一旦出错，要重新打包的话，Jitpack 不能直接在原来的 tag 上再进行构建
    2. 使用 Jitpack 发布 
       1. 推送到远端仓库
