@@ -74,7 +74,7 @@ object JumpUtils {
     /**
      * 跳转到应用详情页面
      */
-    private fun routeToAppDetail(context: Context) {
+    fun routeToAppDetail(context: Context) {
         Intent().apply {
             action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
             data = "package:${context.packageName}".toUri()

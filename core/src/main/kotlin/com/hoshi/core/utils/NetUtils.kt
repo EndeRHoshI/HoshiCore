@@ -26,7 +26,7 @@ object NetUtils {
      * 获取当前网络的 ip 地址
      * @return String
      */
-    private fun getIp(): String {
+    fun getIp(): String {
         NetworkInterface.getNetworkInterfaces().let {
             loo@ for (networkInterface in Collections.list(it)) {
                 for (inetAddresses in Collections.list(networkInterface.inetAddresses)) {
