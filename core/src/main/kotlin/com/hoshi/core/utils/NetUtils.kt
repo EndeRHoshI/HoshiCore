@@ -4,9 +4,11 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.net.wifi.WifiManager
 import android.os.Build
 import androidx.annotation.RequiresPermission
+import androidx.core.content.ContextCompat
 import com.hoshi.core.AppState
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -115,16 +117,31 @@ object NetUtils {
     /**
      * @return Boolean 是否连上网络
      */
+    @JvmStatic
     @SuppressLint("ObsoleteSdkInt")
     @RequiresPermission(Manifest.permission.ACCESS_NETWORK_STATE)
-    fun isNetworkConnected(): Boolean {
-        val connectivityManager = AppState.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val network = connectivityManager.activeNetwork
-            network != null //如果是 null 代表没有网络
-        } else {
-            val network = connectivityManager.activeNetworkInfo
-            network != null //如果是 null 代表没有网络
+    fun isNetworkConnected(context: Context): Boolean {
+        val connectivityManager = ContextCompat.getSystemService(
+            context,
+            ConnectivityManager::class.java
+        ) ?: return false
+
+        // Android M (API 23) 及以上版本使用新API
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val activeNetwork = connectivityManager.activeNetwork
+            val networkCapabilities = connectivityManager.getNetworkCapabilities(activeNetwork)
+
+            return networkCapabilities?.let {
+                it.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) && // 是否有互联网访问
+                        it.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED) // 网络是否通过验证
+            } == true
+        }
+        // 旧版API的兼容处理
+        else {
+            @Suppress("DEPRECATION")
+            val activeNetworkInfo = connectivityManager.activeNetworkInfo
+            @Suppress("DEPRECATION")
+            return activeNetworkInfo != null && activeNetworkInfo.isConnected
         }
     }
 
