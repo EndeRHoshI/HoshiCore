@@ -9,6 +9,7 @@ import android.os.Build
 import android.os.Environment
 import android.os.Process
 import android.telephony.TelephonyManager
+import com.hoshi.core.BuildConfig
 import java.util.Locale
 import kotlin.system.exitProcess
 
@@ -20,10 +21,10 @@ import kotlin.system.exitProcess
 object SystemUtils {
 
     /**
-     * 取得当前 HoshiCore 库的版本，暂时手写放在这里，后续看看要怎么弄比较好
+     * 取得当前 HoshiCore 库的版本
      * @return String
      */
-    fun getCoreVersion() = "1.0.1"
+    fun getCoreVersion() = BuildConfig.CORE_VERSION
 
     /**
      * @return 手机厂商

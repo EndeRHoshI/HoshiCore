@@ -24,6 +24,12 @@ android {
         release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            // 添加版本字段到 BuildConfig
+            buildConfigField("String", "CORE_VERSION", "\"${Versions.coreVersion}\"")
+        }
+        debug {
+            // 添加版本字段到 BuildConfig
+            buildConfigField("String", "CORE_VERSION", "\"${Versions.coreVersion}\"")
         }
     }
 
@@ -34,6 +40,10 @@ android {
 
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+
+    buildFeatures {
+        buildConfig = true // 启用 BuildConfig 功能
     }
 }
 
