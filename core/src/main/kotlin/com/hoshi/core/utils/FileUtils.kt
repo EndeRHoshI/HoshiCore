@@ -178,7 +178,7 @@ object FileUtils {
      * @param targetFile 目标文件
      * @param retainParent 保留文件夹，注意是指目标文件夹，不是父文件夹
      */
-    fun deleteFile(targetFile: File, retainParent: Boolean = true) {
+    fun deleteFile(targetFile: File, retainParent: Boolean = false) {
         if (targetFile.exists()) {
             if (targetFile.isDirectory) {
                 // 传入的 File 是文件夹
@@ -204,9 +204,17 @@ object FileUtils {
      * @param targetPath 目标文件路径
      * @param retainParent 保留文件夹，注意是指目标文件夹，不是父文件夹
      */
-    fun deleteFile(targetPath: String, retainParent: Boolean = true) {
+    fun deleteFile(targetPath: String, retainParent: Boolean = false) {
         val targetFile = File(targetPath)
         deleteFile(targetFile, retainParent)
+    }
+
+    /**
+     * 删除临时文件夹下的内容，但是默认保留临时文件夹
+     * @param retainParent 保留文件夹，注意是指目标文件夹，不是父文件夹
+     */
+    fun deleteTemp(retainParent: Boolean = true) {
+        deleteFile(getTempDir(), retainParent)
     }
 
     fun getFileList(folderPath: String): List<File> {
@@ -344,7 +352,6 @@ object FileUtils {
 
     /**
      * 写入到 txt 文件中
-     * 后续可以抽出到工具类中
      * @param content String 写入内容
      */
     fun writeToTxt(txtPath: String, content: String) {
@@ -354,7 +361,6 @@ object FileUtils {
 
     /**
      * 写入到 txt 文件中
-     * 后续可以抽出到工具类中
      * @param content String 写入内容
      */
     fun writeToTxt(txtFile: File, content: String) {
